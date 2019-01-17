@@ -27,7 +27,10 @@ monkeypatch(Craft.AssetIndex, 'init', function()
 		modalOrientations = ['top', 'right', 'bottom', 'left']
 	}
 
-	const getFolderId = () => this.getDefaultSourceKey().split(':')[1]|0
+	const getFolderId = () => {
+		const split = this.getDefaultSourceKey().split(':')
+		return split[1]
+	}
 
 	embeddedAssets.addButton(button, modalOrientations, getFolderId)
 

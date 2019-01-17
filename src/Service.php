@@ -288,8 +288,9 @@ class Service extends Component
 	 */
 	public function getImageToSize(EmbeddedAsset $embeddedAsset, int $size)
 	{
-		return is_array($embeddedAsset->images) ?
-			$this->_getImageToSize($embeddedAsset->images, $size) : null;
+		$httpsImages = $this->_filterHttpsImages($embeddedAsset->images);
+		return is_array($httpsImages) ?
+			$this->_getImageToSize($httpsImages, $size) : null;
 	}
 
 	/**
@@ -304,6 +305,21 @@ class Service extends Component
 	{
 		return is_array($embeddedAsset->providerIcons) ?
 			$this->_getImageToSize($embeddedAsset->providerIcons, $size) : null;
+	}
+	/**
+	 * Helper method for filternig images without https url
+	 *
+	 * @param array $images
+	 * @return array|null
+	 */
+	private function _filterHttpsImages(array $images)
+	{	
+		return array_filter($images, function ($image)
+			{
+				$isHttps = parse_url($image['url'], PHP_URL_SCHEME);
+				return $isHttps == 'https'; 
+			}
+		);
 	}
 
 	/**
@@ -333,6 +349,7 @@ class Service extends Component
 					$selectedImage = $image;
 					$selectedSize = $imageSize;
 				}
+
 			}
 		}
 
