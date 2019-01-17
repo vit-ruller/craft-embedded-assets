@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.3 - 2018-05-09
+### Added
+- Fitering out non https preview images
+
+### Fixed
+- Fixed volume and directory id / uid handling
+- Fixes rights for non admin users
+
 ## 1.0.2 - 2018-05-09
 ### Added
 - Added `html` property for conveniently handling checks for embed codes and safety
